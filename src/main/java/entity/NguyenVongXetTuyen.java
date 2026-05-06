@@ -48,5 +48,102 @@ public class NguyenVongXetTuyen {
     public NguyenVongXetTuyen() {
     }
 
+    public Integer getIdnv() {
+        return idnv;
+    }
+
+    public void setIdnv(Integer idnv) {
+        this.idnv = idnv;
+    }
+
+    public String getNnCccd() {
+        return nnCccd;
+    }
+
+    public void setNnCccd(String nnCccd) {
+        this.nnCccd = nnCccd;
+    }
+
+    public String getNvManganh() {
+        return nvManganh;
+    }
+
+    public void setNvManganh(String nvManganh) {
+        this.nvManganh = nvManganh;
+    }
+
+    public Integer getNvThuTu() {
+        return nvThuTu;
+    }
+
+    public void setNvThuTu(Integer nvThuTu) {
+        this.nvThuTu = nvThuTu;
+    }
+
+    public BigDecimal getDiemThxt() {
+        return diemThxt;
+    }
+
+    public void setDiemThxt(BigDecimal diemThxt) {
+        this.diemThxt = diemThxt;
+    }
+
+    public BigDecimal getDiemUtqd() {
+        return diemUtqd;
+    }
+
+    public void setDiemUtqd(BigDecimal diemUtqd) {
+        this.diemUtqd = diemUtqd;
+    }
+
+    public BigDecimal getDiemCong() {
+        return diemCong;
+    }
+
+    public void setDiemCong(BigDecimal diemCong) {
+        this.diemCong = diemCong;
+    }
+
+    public BigDecimal getDiemXetTuyen() {
+        return diemXetTuyen;
+    }
+
+    public void setDiemXetTuyen(BigDecimal diemXetTuyen) {
+        this.diemXetTuyen = diemXetTuyen;
+    }
+
+    public String getNvKetQua() {
+        return nvKetQua;
+    }
+
+    public void setNvKetQua(String nvKetQua) {
+        this.nvKetQua = nvKetQua;
+    }
+
+    public String getNvKeys() {
+        return nvKeys;
+    }
+
+    public void setNvKeys(String nvKeys) {
+        this.nvKeys = nvKeys;
+    }
+
+    public String getPhuongThuc() {
+        return phuongThuc;
+    }
+
+    public void setPhuongThuc(String phuongThuc) {
+        this.phuongThuc = phuongThuc;
+    }
+
+    public String getToHopMon() {
+        return toHopMon;
+    }
+
+    public void setToHopMon(String toHopMon) {
+        this.toHopMon = toHopMon;
+    }
+
     // getter setter
+
 }
