@@ -15,7 +15,7 @@ import java.util.*;
 public class NguyenVongXetTuyenBUS {
 
     private final NguyenVongXetTuyenDAO dao = new NguyenVongXetTuyenDAO();
-    private final Scorecalculationservice scoreService = new Scorecalculationservice();
+    private final ScorecalculationBUS scoreService = new ScorecalculationBUS();
     private final DiemXetTuyenDAO diemDAO = new DiemXetTuyenDAO();
     private final NganhToHopDAO nganhToHopDAO = new NganhToHopDAO();
     private final NganhDAO nganhDAO = new NganhDAO();
@@ -156,45 +156,26 @@ public class NguyenVongXetTuyenBUS {
     // =========================================================================
 
     /**
-     * Thuật toán xét tuyển:
-     * 1. Với mỗi ngành, lấy danh sách thí sinh đã có điểm xét tuyển
-     * 2. Sort giảm dần theo diem_xettuyen
-     * 3. Cắt theo chỉ tiêu (n_chitieu) của ngành
-     * 4. Thí sinh trong chỉ tiêu → "Trúng tuyển", còn lại → "Không trúng tuyển"
-     * 5. Cập nhật batch vào DB
+     * Chạy xét tuyển hàng loạt theo đúng thuật toán nguyện vọng ưu tiên.
+     * Delegate sang XetTuyenService.
      */
-    public void runXetTuyen() {
-        List<Nganh> danhSachNganh = nganhDAO.getAllIndustry();
-        List<NguyenVongXetTuyen> toUpdate = new ArrayList<>();
+    public XetTuyenBUS.XetTuyenResult runXetTuyen() {
+        return new XetTuyenBUS().runXetTuyen();
+    }
 
-        for (Nganh nganh : danhSachNganh) {
-            int chiTieu = nganh.getN_chitieu() != null ? nganh.getN_chitieu() : 0;
-            if (chiTieu <= 0)
-                continue;
+    /** Reset toàn bộ kết quả về Chờ xét để chạy lại. */
+    public void resetKetQua() {
+        new XetTuyenBUS().resetKetQua();
+    }
 
-            // Lấy danh sách đã sort theo điểm giảm dần
-            List<NguyenVongXetTuyen> dsNganh = dao.getByManganh(nganh.getManganh());
+    /** Danh sách thí sinh trúng tuyển của 1 ngành (sort điểm giảm dần). */
+    public List<NguyenVongXetTuyen> getDanhSachTrungTuyen(String manganh) {
+        return new XetTuyenBUS().getDanhSachTrungTuyen(manganh);
+    }
 
-            // Set đã trúng tuyển (tránh 1 thí sinh trúng tuyển > 1 ngành theo nguyện vọng
-            // ưu tiên)
-            // Trong bài toán này, mỗi thí sinh chỉ trúng tuyển nguyện vọng ưu tiên cao nhất
-            // Để đơn giản: cắt theo chỉ tiêu, trúng nếu nằm trong top
-            int soTrung = 0;
-            for (NguyenVongXetTuyen nv : dsNganh) {
-                if (soTrung < chiTieu) {
-                    nv.setNvKetQua("Trúng tuyển");
-                    soTrung++;
-                } else {
-                    nv.setNvKetQua("Không trúng tuyển");
-                }
-                toUpdate.add(nv);
-            }
-        }
-
-        // Batch update
-        if (!toUpdate.isEmpty()) {
-            dao.updateKetQuaBatch(toUpdate);
-        }
+    /** Danh sách thí sinh không trúng tuyển bất kỳ ngành nào. */
+    public List<NguyenVongXetTuyen> getDanhSachKhongTrung() {
+        return new XetTuyenBUS().getDanhSachKhongTrung();
     }
 
     // =========================================================================

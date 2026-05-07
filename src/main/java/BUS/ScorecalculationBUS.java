@@ -23,7 +23,7 @@ import java.util.List;
  * Bước 5: Tính ĐXT – điểm xét tuyển cuối = ĐTHGXT + ĐC + ĐƯT (tối đa 30)
  */
 
-public class Scorecalculationservice {
+public class ScorecalculationBUS {
 
     // -------------------------------------------------------------------------
     // Hằng số phương thức
